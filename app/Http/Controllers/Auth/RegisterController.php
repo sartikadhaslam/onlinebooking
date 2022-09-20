@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Konsumen;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/notes';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -68,7 +69,16 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $user->assignRole('user');
+        $user->assignRole('konsumen');
+
+        $konsumen= Konsumen::create([
+            'nama_lengkap' => $data['name'],
+            'email' => $data['email'],
+            'nomor_telepon' => $data['nomor_telepon'],
+            'no_ktp' => $data['no_ktp'],
+            'alamat_domisili' => $data['alamat_domisili']
+        ]);
+
         return $user;
     }
 }

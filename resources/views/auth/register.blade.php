@@ -51,22 +51,38 @@
                         </div>
                         <input class="form-control" type="password" placeholder="{{ __('Confirm Password') }}" name="password_confirmation" required>
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <svg class="c-icon">
+                                    <use xlink:href="{{asset('assets/icons/coreui/free-symbol-defs.svg#cui-phone')}}"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="No Telepon" name="nomor_telepon" value="">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <svg class="c-icon">
+                                    <use xlink:href="{{asset('assets/icons/coreui/free-symbol-defs.svg#cui-credit-card')}}"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <input class="form-control" type="text" placeholder="No KTP" name="no_ktp" value="">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <svg class="c-icon">
+                                    <use xlink:href="{{asset('assets/icons/coreui/free-symbol-defs.svg#cui-map')}}"></use>
+                                </svg>
+                            </span>
+                        </div>
+                        <textarea class="form-control" type="text" placeholder="Alamat Domisili" name="alamat_domisili" value=""></textarea>
+                    </div>
                     <button class="btn btn-block btn-success" type="submit">{{ __('Register') }}</button>
                 </form>
-            </div>
-            <div class="card-footer p-4">
-              <div class="row">
-                <div class="col-6">
-                  <button class="btn btn-block btn-facebook" type="button">
-                    <span>facebook</span>
-                  </button>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-block btn-twitter" type="button">
-                    <span>twitter</span>
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
