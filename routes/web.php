@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', function () {           return view('dashboard.homepage'); });
+    Route::resource('/', 'HomeController');
 
     Route::group(['middleware' => ['role:user']], function () {
         Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -59,6 +59,15 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/modals', function(){   return view('dashboard.notifications.modals'); });
         });
         Route::resource('notes', 'NotesController');
+
+        //Konsumen
+        Route::resource('konsumen', 'KonsumenController');
+
+        //Data Menu
+        Route::resource('data-menu', 'DataMenuController');
+
+        //Reservasi
+        Route::resource('reservasi', 'ReservasiController');
     });
     Auth::routes();
 
