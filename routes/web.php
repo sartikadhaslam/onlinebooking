@@ -61,13 +61,16 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('notes', 'NotesController');
 
         //Konsumen
-        Route::resource('konsumen', 'KonsumenController');
+        Route::resource('data-konsumen', 'KonsumenController');
 
         //Data Menu
         Route::resource('data-menu', 'DataMenuController');
 
         //Reservasi
         Route::resource('reservasi', 'ReservasiController');
+
+        //Pesan Makanan
+        Route::resource('pesanan', 'PesananController');
     });
     Auth::routes();
 

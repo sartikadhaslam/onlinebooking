@@ -8,6 +8,7 @@ use App\Models\Konsumen;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -68,8 +69,10 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'remember_token' => Str::random(10),
+            'menuroles' => 'user' 
         ]);
-        $user->assignRole('konsumen');
+        $user->assignRole('user');
 
         $konsumen= Konsumen::create([
             'nama_lengkap' => $data['name'],

@@ -10,32 +10,23 @@
                     <div class="card-header">
                       <i class="fa fa-align-justify"></i> Tambah Data Menu</div>
                     <div class="card-body m-3">
-                        <form method="POST" action="{{ route('data-menu.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('reservasi.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
-                              <label>Foto</label>
-                              <div class="col-md-9">
-                                <input id="file-input" type="file" name="foto" id="foto">
-                              </div>
+                                <label>Tanggal Reservasi</label>
+                                <input class="form-control" type="date" id="tanggal_reservasi" name="tanggal_reservasi" readonly value="<?php echo date('Y-m-d'); ?>">
                             </div>
                             <div class="form-group row">
-                                <label>Nama Menu</label>
-                                <input class="form-control" type="text" placeholder="Input nama menu" id="nama_menu" name="nama_menu" required autofocus>
+                                <label>Untuk Tanggal</label>
+                                <input class="form-control" type="date" id="untuk_tanggal" name="untuk_tanggal" required>
                             </div>
-
                             <div class="form-group row">
-                                <label>Deskripsi</label>
-                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="9" placeholder="Input Deskripsi" required></textarea>
+                                <label>Jumlah Tamu</label>
+                                <input class="form-control" type="text" id="jumlah_tamu" name="jumlah_tamu" required>
                             </div>
-
                             <div class="form-group row">
-                                <label>Harga</label>
-                                <input type="number" class="form-control" placeholder="Input harga" name="harga" id="harga" required/>
-                            </div>
-
-                            <div class="form-group row">
-                              <button class="btn btn-md btn-success mr-3" type="submit">Simpan</button>
-                              <a href="{{ route('data-menu.index') }}" class="btn btn-md btn-primary">Kembali</a> 
+                              <button class="btn btn-md-m btn-success mr-3" type="submit">Simpan</button>
+                              <a href="{{ route('reservasi.index') }}" class="btn btn-md btn-primary">Kembali</a> 
                             </div>
                         </form>
                     </div>

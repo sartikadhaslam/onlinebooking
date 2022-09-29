@@ -24,7 +24,8 @@ class KonsumenController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $dataKonsumen = Konsumen::where('email', Auth::user()->email)->first();
-        return view('dashboard.konsumen.index', [ 'dataKonsumen' => $dataKonsumen ]);
+        $dataKonsumen = Konsumen::paginate(10);
+        $no = 1;
+        return view('dashboard.konsumen.index', [ 'dataKonsumen' => $dataKonsumen, 'no' => $no ]);
     }
 }
