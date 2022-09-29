@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservasi;
 use App\Models\Konsumen;
+use Carbon\Carbon;
 
 class ReservasiController extends Controller
 {
@@ -62,8 +63,7 @@ class ReservasiController extends Controller
 
         $no = 1;
 
-        $check = Reservasi::where('created_at', '=', date("Y-m-d H:i:s"))
-        ->get();
+        $check = Reservasi::whereDate('created_at', Carbon::today())->get();
         
         $max = count($check);
 
