@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Reservasi;
+use App\Models\Konsumen;
 
 class ReservasiController extends Controller
 {
@@ -24,7 +25,10 @@ class ReservasiController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $reservasi = Reservasi::paginate(10);
+        $reservasi = Reservasi::select('reservasi.id', 'reservasi.kode_booking', 'data_konsumen.nama_lengkap', 'reservasi.tanggal_reservasi',
+        'reservasi.untuk_tanggal', 'reservasi.jumlah_tamu', 'reservasi.status')
+        ->join('data_konsumen', 'data_konsumen.id', 'reservasi.id_konsumen')
+        ->paginate(10);
         $no = 1;
         return view('dashboard.reservasi.index', [ 'reservasi' => $reservasi , 'no' => $no]);
     }
@@ -48,13 +52,34 @@ class ReservasiController extends Controller
      */
     public function store(Request $request)
     {
-        $reservasi = new DataMenu();
-        $reservasi->tanggal_reservasi     = $request->input('tanggal_reservasi');
-        $reservasi->kode_booking          = $request->input('kode_booking');
-        $reservasi->id_konsumen           = $request->input('id_konsumen');
+        $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
+        
+        $tahun = date('Y');
+        
+        $bulan = date('m');
+
+        $tanggal = date('d');
+
+        $no = 1;
+
+        $check = Reservasi::where('created_at', '=', date("Y-m-d H:i:s"))
+        ->get();
+        
+        $max = count($check);
+
+        if($max > 0){
+            $kode_booking = 'BO' . $tahun . $bulan . $tanggal . sprintf("%04s", abs($max + 1));
+        }else{
+            $kode_booking = 'BO' . $tahun . $bulan . $tanggal . sprintf("%04s", $no);
+        }    
+
+        $reservasi = new Reservasi();
+        $reservasi->tanggal_reservasi     = date("Y-m-d H:i:s");
+        $reservasi->kode_booking          = $kode_booking;
+        $reservasi->id_konsumen           = $dataKonsumen->id;
         $reservasi->jumlah_tamu           = $request->input('jumlah_tamu');
         $reservasi->untuk_tanggal         = $request->input('untuk_tanggal');
-        $reservasi->status                = $request->input('status');
+        $reservasi->status                = 'Booked';
         $reservasi->save();
         $request->session()->flash('message', 'Successfully created');
         return redirect()->route('reservasi.index');
@@ -79,12 +104,12 @@ class ReservasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    /*public function edit($id)
     {
         $reservasi = Reservasi::find($id);
         return view('dashboard.reservasi.edit', [ 'Reservasi' => $Reservasi]);
     }
-
+    */
     /**
      * Update the specified resource in storage.
      *
@@ -95,8 +120,7 @@ class ReservasiController extends Controller
     public function update(Request $request, $id)
     {
         $reservasi = Reservasi::find($id);
-        $reservasi->jumlah_tamu     = $request->input('jumlah_tamu');
-        $reservasi->untuk_tanggal   = $request->input('untuk_tanggal');
+        $reservasi->status     = 'Cancel';
         $reservasi->save();
         $request->session()->flash('message', 'Successfully edited');
         return redirect()->route('reservasi.index');
