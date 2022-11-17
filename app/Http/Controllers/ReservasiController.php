@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservasi;
 use App\Models\Konsumen;
+use Carbon\Carbon;
 
 class ReservasiController extends Controller
 {
@@ -25,10 +26,13 @@ class ReservasiController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
         $reservasi = Reservasi::select('reservasi.id', 'reservasi.kode_booking', 'data_konsumen.nama_lengkap', 'reservasi.tanggal_reservasi',
-        'reservasi.untuk_tanggal', 'reservasi.jumlah_tamu', 'reservasi.status')
-        ->join('data_konsumen', 'data_konsumen.id', 'reservasi.id_konsumen')
-        ->paginate(10);
+                    'reservasi.untuk_tanggal', 'reservasi.jumlah_tamu', 'reservasi.status')
+                    ->join('data_konsumen', 'data_konsumen.id', 'reservasi.id_konsumen')
+                    ->where('reservasi.id_konsumen', $dataKonsumen->id)
+                    ->orderBy('tanggal_reservasi', 'asc')
+                    ->paginate(10);
         $no = 1;
         return view('dashboard.reservasi.index', [ 'reservasi' => $reservasi , 'no' => $no]);
     }
@@ -62,8 +66,7 @@ class ReservasiController extends Controller
 
         $no = 1;
 
-        $check = Reservasi::where('created_at', '=', date("Y-m-d H:i:s"))
-        ->get();
+        $check = Reservasi::whereDate('created_at', Carbon::today())->get();
         
         $max = count($check);
 

@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\PesananHeader;
 use App\Models\PesananDetail;
 use App\Models\DataMenu;
+use App\Models\Reservasi;
+use App\Models\Konsumen;
 use Auth;
+use Carbon\Carbon;
 
 class PesananController extends Controller
 {
@@ -26,9 +29,12 @@ class PesananController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $pesanan    = PesananHeader::paginate(10);
-        $no         = 1;
-        return view('dashboard.pesanan.index', [ 'pesanan' => $pesanan , 'no' => $no]);
+        $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
+        $pesananH       = PesananHeader::where('id_konsumen', $dataKonsumen->id)
+                            ->orderBy('tanggal_pesanan', 'asc')
+                            ->paginate(10);
+        $no             = 1;
+        return view('dashboard.pesanan.index', [ 'pesananH' => $pesananH , 'no' => $no]);
     }
 
     /**
@@ -38,8 +44,29 @@ class PesananController extends Controller
      */
     public function create()
     {
-        $dataMenu = DataMenu::all();
-        return view('dashboard.data-menu.create', [ 'dataMenu' => $dataMenu]);
+        $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
+        
+        $tahun = date('Y');
+        
+        $bulan = date('m');
+
+        $tanggal = date('d');
+
+        $no = 1;
+
+        $check = PesananHeader::whereDate('created_at', Carbon::today())->get();
+        
+        $max = count($check);
+
+        if($max > 0){
+            $kode_pesanan = 'OR' . $tahun . $bulan . $tanggal . sprintf("%04s", abs($max + 1));
+        }else{
+            $kode_pesanan = 'OR' . $tahun . $bulan . $tanggal . sprintf("%04s", $no);
+        } 
+
+        $dataReservasi  = Reservasi::where('status', 'Booked')->where('id_konsumen', $dataKonsumen->id)->get();
+        $dataMenu       = DataMenu::all();
+        return view('dashboard.pesanan.create', [ 'dataMenu' => $dataMenu, 'dataReservasi'=> $dataReservasi, 'kode_pesanan' => $kode_pesanan]);
     }
 
     /**
@@ -50,22 +77,36 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
+        
+        $tahun = date('Y');
+        
+        $bulan = date('m');
 
-        $fotoName = time().'.'.$request->foto->extension();  
-     
-        $request->foto->move(public_path('images'), $fotoName);
+        $tanggal = date('d');
 
-        $dataMenu = new DataMenu();
-        $dataMenu->nama_menu     = $request->input('nama_menu');
-        $dataMenu->deskripsi     = $request->input('deskripsi');
-        $dataMenu->harga         = $request->input('harga');
-        $dataMenu->foto          = $fotoName;
-        $dataMenu->save();
+        $no = 1;
+
+        $check = PesananHeader::whereDate('created_at', Carbon::today())->get();
+        
+        $max = count($check);
+
+        if($max > 0){
+            $kode_pesanan = 'OR' . $tahun . $bulan . $tanggal . sprintf("%04s", abs($max + 1));
+        }else{
+            $kode_pesanan = 'OR' . $tahun . $bulan . $tanggal . sprintf("%04s", $no);
+        }    
+
+        $reservasi = new PesananHeader();
+        $reservasi->tanggal_pesanan       = date("Y-m-d H:i:s");
+        $reservasi->kode_pesanan          = $kode_pesanan;
+        $reservasi->id_konsumen           = $dataKonsumen->id;
+        $reservasi->tipe_pesanan           = $request->input('tipe_pesanan');
+        $reservasi->id_reservasi         = $request->input('id_reservasi');
+        $reservasi->status                = 'Booked';
+        $reservasi->save();
         $request->session()->flash('message', 'Successfully created');
-        return redirect()->route('data-menu.index');
+        return redirect()->route('reservasi.index');
     }
 
     /**

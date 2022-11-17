@@ -17,6 +17,7 @@ class CreatePesananHeaderTable extends Migration
             $table->id();
             $table->string('kode_pesanan', 14);
             $table->date('tanggal_pesanan');
+            $table->integer('id_konsumen');
             $table->string('tipe_pesanan', 10);
             $table->integer('id_reservasi')->nullable();
             $table->string('nama_penerima', 35)->nullable();
