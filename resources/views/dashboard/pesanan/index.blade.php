@@ -19,6 +19,43 @@
                             </button>
                           </div>
                       @endif
+                      <table id="table" name="table" class="table table-responsive-sm">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Kode Pesanan</th>
+                            <th>Tanggal Pesanan</th>
+                            <th>Nama Konsumen</th>
+                            <th>Tipe Pesanan</th>
+                            <th>Total Harga</th>
+                            <th>Status</th>
+                            <th colspan="2" class="text-center">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($pesananH as $pesanan)
+                          <tr>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $pesanan->kode_pesanan }}</td>
+                            <td>{{ $pesanan->tanggal_pesanan }}</td>
+                            <td>{{ $pesanan->id_konsumen }}</td>
+                            <td>{{ $pesanan->tipe_pesanan }}</td>
+                            <td>{{ $pesanan->jumlah_tamu }}</td>
+                            <td>{{ $pesanan->status }}</td>
+                            @if($reserv->status != 'Cancel')
+                            <td>
+                            <form method="POST" action="/pesanan/{{ $pesanan->id }}" enctype="multipart/form-data">
+                              @csrf
+                              @method('PUT')
+                              <button type="submit" class="btn btn-block btn-danger">Cancel</button>
+                            </form>
+                            </td>
+                            @endif
+                          </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                      {{ $pesananH->links() }}
                     </div>
                   </div>
                 </div>
