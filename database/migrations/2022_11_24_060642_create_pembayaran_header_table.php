@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePesananHeaderTable extends Migration
+class CreatePembayaranHeaderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreatePesananHeaderTable extends Migration
      */
     public function up()
     {
-        Schema::create('pesanan_header', function (Blueprint $table) {
+        Schema::create('pembayaran_header', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pesanan', 14);
-            $table->date('tanggal_pesanan');
+            $table->date('tanggal_pembayaran')->nullable();
             $table->integer('id_konsumen');
-            $table->string('tipe_pesanan', 10)->nullable();
-            $table->integer('id_reservasi')->nullable();
-            $table->string('nama_penerima', 35)->nullable();
-            $table->string('no_hp_penerima', 16)->nullable();
-            $table->text('alamat_penerima')->nullable();
+            $table->decimal('total_tagihan', 16,2);
+            $table->decimal('total_tagihan_ppn', 16,2);
+            $table->decimal('jumlah_pembayaran', 16,2)->nullable();
+            $table->text('metode_pembayaran')->nullable();
             $table->text('catatan')->nullable();
-            $table->decimal('total', 16,2)->nullable();
             $table->text('status');
             $table->timestamps();
         });
@@ -37,6 +35,6 @@ class CreatePesananHeaderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pesanan_header');
+        Schema::dropIfExists('pembayaran_header');
     }
 }

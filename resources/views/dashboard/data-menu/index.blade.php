@@ -1,7 +1,16 @@
 @extends('dashboard.base')
 
 @section('content')
+<style>
+.zoom {
+  transition: transform .2s; /* Animation */
+  margin: 0 auto;
+}
 
+.zoom:hover {
+  transform: scale(3.0); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 <div class="container-fluid">
             <div class="fade-in">
               <div class="row">
@@ -26,7 +35,7 @@
                             <th>Foto</th>
                             <th>Nama Menu</th>
                             <th>Deskripsi</th>
-                            <th>Harga</th>
+                            <th>Harga (Rp)</th>
                             <th colspan="2" class="text-center">Action</th>
                           </tr>
                         </thead>
@@ -34,10 +43,10 @@
                           @foreach($dataMenu as $menu)
                           <tr>
                             <td>{{ $no++ }}</td>
-                            <td><img src="{{asset('images/'.$menu->foto)}}" alt="" width="50px" height="50px"></td>
+                            <td><div class="zoom"><img src="{{asset('images/'.$menu->foto)}}" alt="" width="50px" height="50px"></div></td>
                             <td>{{ $menu->nama_menu }}</td>
                             <td>{{ $menu->deskripsi }}</td>
-                            <td>{{ $menu->harga }}</td>
+                            <td>{{ number_format($menu->harga) }}</td>
                             <td>
                               <a href="{{ url('/data-menu/' . $menu->id . '/edit') }}" class="btn btn-block btn-primary">Ubah</a>
                             </td>

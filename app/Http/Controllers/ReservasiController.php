@@ -26,6 +26,9 @@ class ReservasiController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
+        $role = Auth::user()->menuroles;
+        $reservasi = [];
+        if($role == 'user'){
         $dataKonsumen   = Konsumen::where('email', Auth::user()->email)->first();
         $reservasi = Reservasi::select('reservasi.id', 'reservasi.kode_booking', 'data_konsumen.nama_lengkap', 'reservasi.tanggal_reservasi',
                     'reservasi.untuk_tanggal', 'reservasi.jumlah_tamu', 'reservasi.status')
@@ -33,6 +36,14 @@ class ReservasiController extends Controller
                     ->where('reservasi.id_konsumen', $dataKonsumen->id)
                     ->orderBy('tanggal_reservasi', 'asc')
                     ->paginate(10);
+        }
+        if($role == 'admin'){
+            $reservasi = Reservasi::select('reservasi.id', 'reservasi.kode_booking', 'data_konsumen.nama_lengkap', 'reservasi.tanggal_reservasi',
+            'reservasi.untuk_tanggal', 'reservasi.jumlah_tamu', 'reservasi.status')
+            ->join('data_konsumen', 'data_konsumen.id', 'reservasi.id_konsumen')
+            ->orderBy('tanggal_reservasi', 'asc')
+            ->paginate(10);
+        }
         $no = 1;
         return view('dashboard.reservasi.index', [ 'reservasi' => $reservasi , 'no' => $no]);
     }
