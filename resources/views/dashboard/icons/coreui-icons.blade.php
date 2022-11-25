@@ -679,6 +679,9 @@
                     <div class="col-6 col-sm-4 col-md-2"><i class="c-icon c-icon-2xl mt-5 mb-2 cil-eyedropper"></i>
                       <div>cil-eyedropper</div>
                     </div>
+                    <div class="col-6 col-sm-4 col-md-2"><i class="c-icon c-icon-2xl mt-5 mb-2 cil-eye"></i>
+                      <div>cil-eye</div>
+                    </div>
                     <div class="col-6 col-sm-4 col-md-2"><i class="c-icon c-icon-2xl mt-5 mb-2 cil-face"></i>
                       <div>cil-face</div>
                     </div>

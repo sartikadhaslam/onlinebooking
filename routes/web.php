@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\PembayaranController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,7 +71,34 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('reservasi', 'ReservasiController');
 
         //Pesan Makanan
-        Route::resource('pesanan', 'PesananController');
+        Route::prefix('/pesanan')->group(function () {
+            Route::get('/', [PesananController::class, 'index']);
+            Route::get('/create', [PesananController::class, 'create']);
+            Route::post('/store', [PesananController::class, 'store']);
+            Route::post('/store_detail', [PesananController::class, 'store_detail']);
+            Route::get('/edit/{kode}', [PesananController::class, 'edit']);
+            Route::get('/view/{id}', [PesananController::class, 'view']);
+            Route::put('/update/{kode}', [PesananController::class, 'update']);
+            Route::delete('/delete/{id}', [PesananController::class, 'destroy']);
+            Route::delete('/delete_detail/{id}', [PesananController::class, 'destroy_detail']);
+        });
+
+        //Pembayaran
+        Route::prefix('/pembayaran')->group(function () {
+            Route::get('/', [PembayaranController::class, 'index']);
+            Route::get('/edit/{kode}', [PembayaranController::class, 'edit']);
+            Route::get('/view/{id}', [PembayaranController::class, 'view']);
+            Route::put('/update/{kode}', [PembayaranController::class, 'update']);
+            Route::get('/bill/{id}', [PembayaranController::class, 'bill']);
+            Route::get('/kwintansi/{id}', [PembayaranController::class, 'kwintansi']);
+        });
+
+        //Laporan
+        Route::get('/laporan-reservasi', [LaporanController::class, 'reservasi']);
+        Route::get('/laporan-pesanan', [LaporanController::class, 'pesanan']);
+        Route::get('/laporan-pembayaran', [LaporanController::class, 'pembayaran']);
+        Route::put('/laporan-tren-menu', [LaporanController::class, 'tren-menu']);
+        Route::put('/laporan-konsumen', [LaporanController::class, 'konsumen']);
     });
     Auth::routes();
 

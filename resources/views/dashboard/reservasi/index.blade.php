@@ -65,7 +65,7 @@
                                   </div>
                                   <!-- /.modal-->
                             </td>
-                            @if($reserv->status != 'Cancel')
+                            @if($reserv->status == 'Booked')
                             <td>
                             <form method="POST" action="/reservasi/{{ $reserv->id }}" enctype="multipart/form-data">
                               @csrf

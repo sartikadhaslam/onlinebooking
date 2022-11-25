@@ -7,10 +7,8 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="card">
-                    <div class="card-header"><i class="fa fa-align-justify"></i> PESANAN</div>
+                    <div class="card-header"><i class="fa fa-align-justify"></i> PEMBAYARAN</div>
                     <div class="card-body">
-                      <a href="{{ url('/pesanan/create') }}" class="btn btn-primary btn-md">+ Tambah</a>
-                      <br>
                       <br>
                       @if(Session::has('message'))
                           <div class="alert alert-success" role="alert">{{ Session::get('message') }}
@@ -24,43 +22,35 @@
                           <tr>
                             <th>No</th>
                             <th>Kode Pesanan</th>
-                            <th>Tanggal Pesanan</th>
                             <th>Nama Konsumen</th>
-                            <th>Tipe Pesanan</th>
-                            <th>Total Harga (Rp)</th>
+                            <th>Total Tagihan Setelah PPN (Rp)</th>
                             <th>Status</th>
                             <th colspan="2" class="text-center">Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($pesananH as $pesanan)
+                          @foreach($pembayaranH as $pembayaran)
                           <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $pesanan->kode_pesanan }}</td>
-                            <td>{{ $pesanan->tanggal_pesanan }}</td>
-                            <td>{{ $pesanan->nama_lengkap }}</td>
-                            <td>{{ $pesanan->tipe_pesanan }}</td>
-                            <td>{{ number_format($pesanan->total) }}</td>
-                            <td>{{ $pesanan->status }}</td>
-                            @if($pesanan->status == 'Ordered' || $pesanan->status == 'Closed')
+                            <td>{{ $pembayaran->kode_pesanan }}</td>
+                            <td>{{ $pembayaran->nama_lengkap }}</td>
+                            <td>{{ number_format($pembayaran->total_tagihan_ppn) }}</td>
+                            <td>{{ $pembayaran->status }}</td>
+                            @if($pembayaran->status == 'Closed')
                             <td>
-                              <a href="{{ url('/pesanan/view/' . $pesanan->id) }}" class="btn btn-block btn-primary">View</a>
+                              <a href="{{ url('/pembayaran/view/' . $pembayaran->id) }}" class="btn btn-block btn-primary">View</a>
                             </td>
                             @endif
-                            @if($pesanan->status == 'Draft')
+                            @if($pembayaran->status == 'Billed')
                             <td>
-                              <form action="{{ url('/pesanan/delete/' . $pesanan->id) }}" method="POST" onsubmit="return validateForm()">
-                                  @method('DELETE')
-                                  @csrf
-                                  <button class="btn btn-block btn-danger">Hapus</button>
-                              </form>
+                              <a href="{{ url('/pembayaran/edit/' . $pembayaran->id) }}" class="btn btn-block btn-primary">Bayar</a>
                             </td>
                             @endif
                           </tr>
                           @endforeach
                         </tbody>
                       </table>
-                      {{ $pesananH->links() }}
+                      {{ $pembayaranH->links() }}
                     </div>
                   </div>
                 </div>
