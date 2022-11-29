@@ -23,7 +23,7 @@
               <svg class="c-icon">
                 <use xlink:href="{{ url('/icons/sprites/free.svg#cil-envelope-open') }}"></use>
               </svg></a></li>-->
-          <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <li class="c-header-nav-item dropdown no-print"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/avatars/6.jpg') }}" alt="user@email.com"></div>
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
@@ -40,10 +40,10 @@
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ url('/icons/sprites/free.svg#cil-comment-square') }}"></use>
                 </svg> Comments<span class="badge badge-warning ml-auto">42</span></a>-->
-              <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
+              <!--<div class="dropdown-header bg-light py-2"><strong>Settings</strong></div><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ url('/icons/sprites/free.svg#cil-user') }}"></use>
-                </svg> Profile</a><!--<a class="dropdown-item" href="#">
+                </svg> Profile</a><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ url('/icons/sprites/free.svg#cil-settings') }}"></use>
                 </svg> Settings</a><a class="dropdown-item" href="#">
@@ -52,8 +52,8 @@
                 </svg> Payments<span class="badge badge-secondary ml-auto">42</span></a><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ url('/icons/sprites/free.svg#cil-file') }}"></use>
-                </svg> Projects<span class="badge badge-primary ml-auto">42</span></a>-->
-              <div class="dropdown-divider"></div><!--<a class="dropdown-item" href="#">
+                </svg> Projects<span class="badge badge-primary ml-auto">42</span></a>
+              <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                 <svg class="c-icon mr-2">
                   <use xlink:href="{{ url('/icons/sprites/free.svg#cil-lock-locked') }}"></use>
                 </svg> Lock Account</a>--><a class="dropdown-item" href="#">
@@ -63,7 +63,7 @@
             </div>
           </li>
         </ul>
-        <div class="c-subheader px-3">
+        <div class="c-subheader px-3 no-print">
           <ol class="breadcrumb border-0 m-0">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <?php $segments = ''; ?>

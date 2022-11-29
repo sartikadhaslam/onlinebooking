@@ -45,7 +45,7 @@ class ReservasiController extends Controller
             ->paginate(10);
         }
         $no = 1;
-        return view('dashboard.reservasi.index', [ 'reservasi' => $reservasi , 'no' => $no]);
+        return view('dashboard.reservasi.index', [ 'reservasi' => $reservasi , 'no' => $no, 'role'=>$role]);
     }
 
     /**

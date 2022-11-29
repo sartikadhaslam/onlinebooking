@@ -17,6 +17,9 @@
                             </button>
                           </div>
                       @endif
+                      <div class="col-md-4 float-right">
+                        <input class="form-control no-print" id="myInput" type="text" placeholder="Cari.."><br>
+                      </div>
                       <table id="table" name="table" class="table table-responsive-sm">
                         <thead>
                           <tr>
@@ -28,7 +31,7 @@
                             <th colspan="2" class="text-center">Action</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="myTable">
                           @foreach($pembayaranH as $pembayaran)
                           <tr>
                             <td>{{ $no++ }}</td>
@@ -69,5 +72,12 @@
         return false;
         }
     }
-  </script>
+    
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+</script>
 @endpush

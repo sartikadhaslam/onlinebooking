@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\LaporanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,11 +95,11 @@ Route::group(['middleware' => ['get.menu']], function () {
         });
 
         //Laporan
-        Route::get('/laporan-reservasi', [LaporanController::class, 'reservasi']);
-        Route::get('/laporan-pesanan', [LaporanController::class, 'pesanan']);
-        Route::get('/laporan-pembayaran', [LaporanController::class, 'pembayaran']);
-        Route::put('/laporan-tren-menu', [LaporanController::class, 'tren-menu']);
-        Route::put('/laporan-konsumen', [LaporanController::class, 'konsumen']);
+        Route::get('/laporan-reservasi', [LaporanController::class, 'laporan_reservasi']);
+        Route::get('/laporan-pesanan', [LaporanController::class, 'laporan_pesanan']);
+        Route::get('/laporan-pembayaran', [LaporanController::class, 'laporan_pembayaran']);
+        Route::get('/laporan-tren-menu', [LaporanController::class, 'laporan_menu']);
+        Route::get('/laporan-konsumen', [LaporanController::class, 'laporan_konsumen']);
     });
     Auth::routes();
 
