@@ -48,7 +48,7 @@ class PesananController extends Controller
             ->paginate(10);
         }
         $no             = 1;
-        return view('dashboard.pesanan.index', [ 'pesananH' => $pesananH , 'no' => $no]);
+        return view('dashboard.pesanan.index', [ 'pesananH' => $pesananH , 'no' => $no, 'role' => $role]);
     }
 
     /**
