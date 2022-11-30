@@ -100,6 +100,9 @@
                             </tr>
                           </tbody>
                         </table>
+                        @if($pembayaranHeader->status == 'Billed')
+                        <a href="{{ url('/pembayaran/bill/'. $pembayaranHeader->id ) }}" class="btn btn-danger btn-md"  target="_blank"> <i class="cil-print"></i> Bill</a>
+                        @endif
                     </div>
                 </div>
               </div>
