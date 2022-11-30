@@ -23,9 +23,9 @@
                     <div class="card-body">
                         <div class="no-print">
                             <form class="form-inline" action="" method="get">
-                                <label for="tanggal_awal" class="mr-sm-2">Tanggal Akhir:</label>
+                                <label for="tanggal_awal" class="mr-sm-2">Tanggal Awal:</label>
                                 <input type="date" class="form-control mb-2 mr-sm-2" id="tanggal_awal" name="tanggal_awal">
-                                <label for="tanggal_akhir" class="mr-sm-2">Tanggal Awal:</label>
+                                <label for="tanggal_akhir" class="mr-sm-2">Tanggal Akhir:</label>
                                 <input type="date" class="form-control mb-2 mr-sm-2" id="tanggal_akhir" name="tanggal_akhir">
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                             </form>

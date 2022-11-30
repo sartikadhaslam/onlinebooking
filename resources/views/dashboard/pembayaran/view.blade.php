@@ -90,9 +90,6 @@
                             </tr>
                           </tbody>
                         </table>
-                        @if($pembayaranHeader->status == 'Billed')
-                        <a href="{{ url('/pembayaran/bill/'. $pembayaranHeader->id ) }}" class="btn btn-danger btn-md"  target="_blank"> <i class="cil-print"></i> Bill</a>
-                        @endif
                         @if($pembayaranHeader->status == 'Closed')
                         <a href="{{ url('/pembayaran/kwintansi/'. $pembayaranHeader->id) }}" class="btn btn-danger btn-md"  target="_blank"><i class="cil-print"></i> Kwintansi</a>
                         @endif
